@@ -284,11 +284,6 @@ public class ClientDrawingControlUI extends javax.swing.JFrame {
         }
     }                                             
 
-    private boolean checkTextFieldLenght(){
-        if(textFieldLength.getText()==null){return false;}
-        else {return true;}
-
-    }
 
     public void formText(String direction){
         labelError.setText("");

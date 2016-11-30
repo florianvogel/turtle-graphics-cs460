@@ -1,10 +1,22 @@
 //private class draw {}
-
+import java.awt.*;
+import javax.swing.*;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+import java.security.*;
 
 public class ServerDrawing extends javax.swing.JFrame {
 
     public ServerDrawing() {
         initComponents();
+        this.setVisible(true);
+       /* try{
+            startServer();
+        }catch (IOException e){ 
+            System.out.println("Error: Couldn't start server.'");
+        }*/
     }
     //BEGINN creating GUI
     @SuppressWarnings("unchecked")
@@ -53,8 +65,46 @@ public class ServerDrawing extends javax.swing.JFrame {
     }                      
     //END creating GUI
     
-    public static void startServer(){
-        System.out.println("Starting Server");
+    public void startServer()
+    throws IOException{
+            System.out.println("Starting Server");
+
+            int portnumber = 21995;
+            ServerSocket ss = new ServerSocket(portnumber);
+                    while (true) 
+                    new ServConn(ss.accept());
+    }
+    class ServConn extends Thread {
+        Socket sock;
+        ServConn(Socket s)
+        {
+            sock=s;
+            start();
+        }
+        public void run()
+        {
+            try
+            {
+                //Server
+                //String Command=null;
+                String buf;
+                //System.out.println("Socket.localPort:"+sock.getLocalPort()+" Socket.port:"+sock.getPort());
+                System.out.println("Accepted Client");
+                BufferedReader BR = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                
+                String message;
+                while((message= BR.readLine())!=null){
+                    System.out.println("Total message:" + message);
+                    String[] recieved = message.split(":");
+
+                    System.out.println(recieved[0]);
+                    System.out.println(recieved[1]);
+                    System.out.println(recieved[2]);
+                    }
+                //out.println(buf);
+                sock.close();
+                    }catch(IOException e){System.out.println("I/O Error "+e);}
+            }
     }
 
     public static void main(String args[]) {
@@ -77,12 +127,22 @@ public class ServerDrawing extends javax.swing.JFrame {
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            ServerDrawing server;
             public void run() {
-                new ServerDrawing().setVisible(true);
+                server = new ServerDrawing();//.setVisible(true);
+                try{
+            server.startServer();
+        }catch (IOException e){ 
+            System.out.println("Error: Couldn't start server.'");
+        }
             }
+            
         });
-        startServer();
+        
+
+
     }
+    
 
     // Variables declaration - do not modify                     
     private javax.swing.JPanel panelToDraw;

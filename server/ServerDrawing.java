@@ -12,7 +12,7 @@ public class ServerDrawing extends javax.swing.JFrame {
     public ServerDrawing() {
         initComponents();
         this.setVisible(true);
-       /* try{
+       /*try{
             startServer();
         }catch (IOException e){ 
             System.out.println("Error: Couldn't start server.'");
@@ -31,7 +31,7 @@ public class ServerDrawing extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(450, 335));
         setResizable(false);
         
-        panelToDraw.setBackground(new java.awt.Color(255, 255, 255));
+        panelToDraw.setBackground(new java.awt.Color(255, 0, 255));
 
         javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
         panelToDraw.setLayout(panelToDrawLayout);
@@ -130,17 +130,18 @@ public class ServerDrawing extends javax.swing.JFrame {
             ServerDrawing server;
             public void run() {
                 server = new ServerDrawing();//.setVisible(true);
-                try{
-            server.startServer();
-        }catch (IOException e){ 
-            System.out.println("Error: Couldn't start server.'");
-        }
-            }
-            
+				Thread t = new Thread(new Runnable() {
+					public void run(){
+						try{
+							server.startServer();
+						}catch (IOException e){ 
+							System.out.println("Error: Couldn't start server.'");
+						}
+					}
+				});
+				t.start();
+			}
         });
-        
-
-
     }
     
 

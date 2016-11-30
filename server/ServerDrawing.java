@@ -9,8 +9,8 @@ import java.security.*;
 
 public class ServerDrawing extends javax.swing.JFrame {
 
-    public ServerDrawing() {
-        initComponents();
+    public ServerDrawing(TurtleCanvas c) {
+        initComponents(c);
         this.setVisible(true);
        /*try{
             startServer();
@@ -20,8 +20,8 @@ public class ServerDrawing extends javax.swing.JFrame {
     }
     //BEGINN creating GUI
     @SuppressWarnings("unchecked")
-    private void initComponents() {
-
+    private void initComponents(TurtleCanvas c) {
+        TurtleCanvas canvas = c; //display this
         panelToDraw = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -32,8 +32,8 @@ public class ServerDrawing extends javax.swing.JFrame {
         setResizable(false);
         
         panelToDraw.setBackground(new java.awt.Color(255, 0, 255));
-
-        javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
+        panelToDraw.add(canvas);
+        /*javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
         panelToDraw.setLayout(panelToDrawLayout);
         panelToDrawLayout.setHorizontalGroup(
             panelToDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,20 +59,20 @@ public class ServerDrawing extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panelToDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-        );
+        );*/
 
         pack();
     }                      
     //END creating GUI
     
-    public void startServer()
+    public void startServer(TurtleCanvas c)
     throws IOException{
             System.out.println("Starting Server");
-            TurtleCanvas c = new TurtleCanvas();
+            TurtleCanvas canvas = c;
             int portnumber = 21995;
             ServerSocket ss = new ServerSocket(portnumber);
-                    while (true) 
-                    new ServConn(ss.accept(), c);
+                    //while (true) 
+                    new ServConn(ss.accept(), canvas);
     }
     class ServConn extends Thread {
         Socket sock;
@@ -181,12 +181,13 @@ public class ServerDrawing extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             ServerDrawing server;
+            TurtleCanvas c = new TurtleCanvas();
             public void run() {
-                server = new ServerDrawing();//.setVisible(true);
+                server = new ServerDrawing(c);//.setVisible(true);
 				Thread t = new Thread(new Runnable() {
 					public void run(){
 						try{
-							server.startServer();
+							server.startServer(c);
 						}catch (IOException e){ 
 							System.out.println("Error: Couldn't start server.'");
 						}

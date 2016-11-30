@@ -31,6 +31,14 @@ public class TurtleCanvas extends Canvas{
 		posY = newY;
 	}
 
+	public void setX(int newX){
+		x = newX;
+	}
+
+	public void setY(int newY){
+		y = newY;
+	}
+
 	public void setLength(int newLength){
 		length = newLength;
 	}
@@ -45,6 +53,14 @@ public class TurtleCanvas extends Canvas{
 
 	public int getPosY(){
 		return posY;
+	}
+
+	public int getX(){
+		return x;
+	}
+
+	public int getY(){
+		return y;
 	}
 
 	public int getLength(){

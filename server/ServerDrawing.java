@@ -68,17 +68,19 @@ public class ServerDrawing extends javax.swing.JFrame {
     public void startServer()
     throws IOException{
             System.out.println("Starting Server");
-
+            TurtleCanvas c = new TurtleCanvas();
             int portnumber = 21995;
             ServerSocket ss = new ServerSocket(portnumber);
                     while (true) 
-                    new ServConn(ss.accept());
+                    new ServConn(ss.accept(), c);
     }
     class ServConn extends Thread {
         Socket sock;
-        ServConn(Socket s)
+        TurtleCanvas canvas;
+        ServConn(Socket s, TurtleCanvas c)
         {
             sock=s;
+            canvas = c;
             start();
         }
         public void run()
@@ -97,10 +99,61 @@ public class ServerDrawing extends javax.swing.JFrame {
                     System.out.println("Total message:" + message);
                     String[] recieved = message.split(":");
 
-                    System.out.println(recieved[0]);
-                    System.out.println(recieved[1]);
-                    System.out.println(recieved[2]);
+                    System.out.println(recieved[0]); //direction
+                    System.out.println(recieved[1]); //length
+                    System.out.println(recieved[2]); //penstatus
+
+                    int length = 0;
+                    try{
+                        length = Integer.parseInt(recieved[1]);
                     }
+                    catch(Exception e){
+                        System.out.println("Error converting length");
+                    }
+
+                    if(recieved[2].equals("up")){
+                        switch (recieved[0]){
+                            case "N":
+                                canvas.setY(canvas.getY() + length);
+                                break;
+                            case "E":
+                                canvas.setX(canvas.getX() + length);
+                                System.out.println(" pen up moved east");
+                                break;
+                            case "S":
+                                canvas.setY(canvas.getY() - length);
+                                break;
+                            case "W":
+                                canvas.setX(canvas.getX() - length);
+                                break;
+                        }
+                    }
+                    else{
+                        switch (recieved[0]){
+                            case "N":
+                                canvas.setPosY(canvas.getY() + length);
+                                //canvas.draw();
+                                canvas.setY(canvas.getPosY());
+                                break;
+                            case "E":
+                                canvas.setPosX(canvas.getX() + length);
+                               // canvas.draw();
+                               System.out.println(" pen down moved east");
+                                canvas.setX(canvas.getPosX());
+                                break;
+                            case "S":
+                                canvas.setPosY(canvas.getY() - length);
+                                //canvas.draw();
+                                canvas.setY(canvas.getPosY());
+                                break;
+                            case "W":
+                                canvas.setPosX(canvas.getX() - length);
+                                //canvas.draw();
+                                canvas.setX(canvas.getPosX());
+                                break;
+                        }
+                    }
+                }
                 //out.println(buf);
                 sock.close();
                     }catch(IOException e){System.out.println("I/O Error "+e);}

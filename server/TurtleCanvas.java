@@ -1,25 +1,53 @@
-import java.awt.Canvas;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 
-public class TurtleCanvas extends Canvas{
+public class TurtleCanvas extends JPanel{
 
-	private Canvas canvas;
+	//private JPanel canvas;
 	private int x, y; //The current pen coordinates
 	private int posX, posY; //The position to move the pen to
 	private boolean penDown;
+	private boolean NS;
 	private int length;
 
 	public TurtleCanvas(){
-		canvas = new Canvas();
-		posX = 0;
-		posY = 0;
+		//canvas = new Canvas();
+		posX = 100;
+		posY = 100;
 		penDown = false;
+		NS = true;
 		length = 0;
 	}
 
 	@Override
-	public void paint(Graphics g){
-		g.drawLine(x,y,posX,posY);
+	public void paintComponent(Graphics g){
+		//
+		super.paintComponent(g);
+		if(NS){
+			g.drawLine(x,y,x,y-length);
+		}
+		else{
+			g.drawLine(x,y,x-length,y);
+		}
+		//g.drawLine(0,0,20,20);
+		//g.drawString("BLAH", 20, 20);
+         //   g.drawRect(200, 200, 200, 200);
+         System.out.println("x: " + x + " y: " + y + " posx " + posX + " posy " + posY);
+         //x = posX;
+         //y = posY;
+     	 System.out.println("x: " + x + " y: " + y + " posx " + posX + " posy " + posY);
+	}
+
+	public void draw(boolean NorS, int newLength){
+		NS = NorS;
+		length = newLength;
+		if(NS){
+			y += length;
+		}
+		else{
+			x += length;
+		}
+		repaint();
 	}
 
 	//Getters and Setters

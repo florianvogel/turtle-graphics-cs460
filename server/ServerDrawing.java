@@ -21,8 +21,8 @@ public class ServerDrawing extends javax.swing.JFrame {
     //BEGINN creating GUI
     @SuppressWarnings("unchecked")
     private void initComponents(TurtleCanvas c) {
-        TurtleCanvas canvas = c; //display this
-        panelToDraw = new javax.swing.JPanel();
+        TurtleCanvas panelToDraw = c; //display this
+        //panelToDraw = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server Drawing");
@@ -31,9 +31,9 @@ public class ServerDrawing extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(450, 335));
         setResizable(false);
         
-        panelToDraw.setBackground(new java.awt.Color(255, 0, 255));
-        panelToDraw.add(canvas);
-        /*javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
+        panelToDraw.setBackground(new java.awt.Color(255, 255, 255));
+        //panelToDraw.add(canvas);
+        javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
         panelToDraw.setLayout(panelToDrawLayout);
         panelToDrawLayout.setHorizontalGroup(
             panelToDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,7 +59,7 @@ public class ServerDrawing extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panelToDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-        );*/
+        );
 
         pack();
     }                      
@@ -71,7 +71,7 @@ public class ServerDrawing extends javax.swing.JFrame {
             TurtleCanvas canvas = c;
             int portnumber = 21995;
             ServerSocket ss = new ServerSocket(portnumber);
-                    //while (true) 
+                    while (true) 
                     new ServConn(ss.accept(), canvas);
     }
     class ServConn extends Thread {
@@ -114,14 +114,14 @@ public class ServerDrawing extends javax.swing.JFrame {
                     if(recieved[2].equals("up")){
                         switch (recieved[0]){
                             case "N":
-                                canvas.setY(canvas.getY() + length);
+                                canvas.setY(canvas.getY() - length);
                                 break;
                             case "E":
                                 canvas.setX(canvas.getX() + length);
                                 System.out.println(" pen up moved east");
                                 break;
                             case "S":
-                                canvas.setY(canvas.getY() - length);
+                                canvas.setY(canvas.getY() + length);
                                 break;
                             case "W":
                                 canvas.setX(canvas.getX() - length);
@@ -131,25 +131,25 @@ public class ServerDrawing extends javax.swing.JFrame {
                     else{
                         switch (recieved[0]){
                             case "N":
-                                canvas.setPosY(canvas.getY() + length);
-                                //canvas.draw();
-                                canvas.setY(canvas.getPosY());
+                                //canvas.setPosY(canvas.getY() - length);
+                                canvas.draw(true, -length);
+                                //canvas.setY(canvas.getPosY());
                                 break;
                             case "E":
-                                canvas.setPosX(canvas.getX() + length);
-                               // canvas.draw();
+                                //canvas.setPosX(canvas.getX() + length);
+                               canvas.draw(false, length);
                                System.out.println(" pen down moved east");
-                                canvas.setX(canvas.getPosX());
+                                //canvas.setX(canvas.getPosX());
                                 break;
                             case "S":
-                                canvas.setPosY(canvas.getY() - length);
-                                //canvas.draw();
-                                canvas.setY(canvas.getPosY());
+                                //canvas.setPosY(canvas.getY() + length);
+                                canvas.draw(true, length);
+                                //canvas.setY(canvas.getPosY());
                                 break;
                             case "W":
-                                canvas.setPosX(canvas.getX() - length);
-                                //canvas.draw();
-                                canvas.setX(canvas.getPosX());
+                                //canvas.setPosX(canvas.getX() - length);
+                                canvas.draw(false, -length);
+                                //canvas.setX(canvas.getPosX());
                                 break;
                         }
                     }

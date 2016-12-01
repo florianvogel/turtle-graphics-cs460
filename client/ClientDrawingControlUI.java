@@ -7,7 +7,7 @@
  * Student No: 5373720
  * Email: fv69@nau.edu
  *
- * Date: 10/06/2016
+ * Date: 11/30/2016
  */
  
 import java.io.*;
@@ -18,12 +18,13 @@ public class ClientDrawingControlUI extends javax.swing.JFrame {
     Socket socket;
     PrintStream toServer;
 
+	//Constructor to call initalize function
     public ClientDrawingControlUI() {
         initComponents();
     }
 
     @SuppressWarnings("unchecked")
-    // BEGINN Creating GUI                        
+    // BEGIN Creating GUI                        
     private void initComponents() {
 
         groupPenStatus = new javax.swing.ButtonGroup();
@@ -248,7 +249,9 @@ public class ClientDrawingControlUI extends javax.swing.JFrame {
         pack();
     }// END Creating GUI                       
 
-    private void buttonEndActionPerformed(java.awt.event.ActionEvent evt) {                                          
+	//Will be called when the End button is clicked.
+	//Closes the connection and exits the program
+    private void buttonEndActionPerformed(java.awt.event.ActionEvent evt){                                          
         try {
             socket.close();
             toServer.close();
@@ -258,6 +261,10 @@ public class ClientDrawingControlUI extends javax.swing.JFrame {
         }
     }                        
 
+	//Will be called when the Connect/Disconnect button is clicked.
+	//If button is "Connect", attempts to connect to the server with the given IP and Port
+	//numbers found in the textFieldServerIP and textFieldServerPort respectively.
+	//Otherwise will attempt to close the connection to the server
     private void buttonConnectActionPerformed(java.awt.event.ActionEvent evt) {                                              
         //Connect to server
         if(buttonConnect.getText()=="Connect"){
@@ -285,35 +292,42 @@ public class ClientDrawingControlUI extends javax.swing.JFrame {
     }                                             
 
 
+	//Will form the string to be sent to the server. Takes a direction
+	//and will gather data from the textFieldLength and pen up/down radio box.
+	//Then sends the string to the server and prints it to the console.
     public void formText(String direction){
         labelError.setText("");
-        if(socket.isConnected()){
-            if(textFieldLength.getText().isEmpty()){
-                labelError.setText("Error: Lenghtfield is empty");
-            }else{
-                toServer.println(direction+":"+textFieldLength.getText()+":"+groupPenStatus.getSelection().getActionCommand());
-                System.out.println(direction+":"+textFieldLength.getText()+":"+groupPenStatus.getSelection().getActionCommand());
-            }
-        }else{labelError.setText("Error: Not connected");}
-
+	    if(socket != null && socket.isConnected()){
+	        if(textFieldLength.getText().isEmpty()){
+	            labelError.setText("Error: Lengthfield is empty");
+	        }else{
+	            toServer.println(direction+":"+textFieldLength.getText()+":"+groupPenStatus.getSelection().getActionCommand());
+	            System.out.println(direction+":"+textFieldLength.getText()+":"+groupPenStatus.getSelection().getActionCommand());
+	        }
+	    }else{labelError.setText("Error: Not connected");}
     }
+
+    //Called when North button is clicked. Will send "N" to formText method
     public void buttonNorthActionPerformed(java.awt.event.ActionEvent evt) {
         formText("N");
     }                                           
 
+    //Called when West button is clicked. Will send "N" to formText method
     public void buttonWestActionPerformed(java.awt.event.ActionEvent evt) {                                           
         formText("W");
     }                                          
 
+    //Called when South button is clicked. Will send "N" to formText method
     public void buttonSouthActionPerformed(java.awt.event.ActionEvent evt) {                                            
         formText("S");
     }                                           
 
+    //Called when East button is clicked. Will send "N" to formText method
     public void buttonEastActionPerformed(java.awt.event.ActionEvent evt) {                                           
         formText("E");
     }                                          
 
-
+	//Main class used to start the GUI interface.
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

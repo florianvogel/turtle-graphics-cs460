@@ -7,60 +7,33 @@ import java.util.*;
 import java.lang.*;
 import java.security.*;
 
+
 public class ServerDrawing extends javax.swing.JFrame {
 
+	private static final int WIDTH = 1000;
+	private static final int HEIGHT = 1000;
+	
     public ServerDrawing(TurtleCanvas c) {
         initComponents(c);
         this.setVisible(true);
-       /*try{
-            startServer();
-        }catch (IOException e){ 
-            System.out.println("Error: Couldn't start server.'");
-        }*/
     }
-    //BEGINN creating GUI
+    
+    //BEGIN creating GUI
     @SuppressWarnings("unchecked")
     private void initComponents(TurtleCanvas c) {
         TurtleCanvas panelToDraw = c; //display this
-        //panelToDraw = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server Drawing");
         setName("frameServerDrawing"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(450, 335));
-        setSize(new java.awt.Dimension(450, 335));
+        setPreferredSize(new java.awt.Dimension(WIDTH,HEIGHT));
+        setSize(new java.awt.Dimension(WIDTH,HEIGHT));
         setResizable(false);
+        //panelToDraw.setScreenHeight(this.getHeight());
+        //panelToDraw.setScreenWidth(this.getWidth());
         
         panelToDraw.setBackground(new java.awt.Color(255, 255, 255));
         this.add(panelToDraw);
-        //panelToDraw.add(canvas);
-        /*javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
-        panelToDraw.setLayout(panelToDrawLayout);
-        panelToDrawLayout.setHorizontalGroup(
-            panelToDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 438, Short.MAX_VALUE)
-        );
-        panelToDrawLayout.setVerticalGroup(
-            panelToDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 323, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelToDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelToDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );*/
 
         pack();
     }                      
@@ -89,9 +62,7 @@ public class ServerDrawing extends javax.swing.JFrame {
             try
             {
                 //Server
-                //String Command=null;
                 String buf;
-                //System.out.println("Socket.localPort:"+sock.getLocalPort()+" Socket.port:"+sock.getPort());
                 System.out.println("Accepted Client");
                 BufferedReader BR = new BufferedReader(new InputStreamReader(sock.getInputStream()));
                 
@@ -132,25 +103,16 @@ public class ServerDrawing extends javax.swing.JFrame {
                     else{
                         switch (recieved[0]){
                             case "N":
-                                //canvas.setPosY(canvas.getY() - length);
                                 canvas.draw(true, -length);
-                                //canvas.setY(canvas.getPosY());
                                 break;
                             case "E":
-                                //canvas.setPosX(canvas.getX() + length);
                                canvas.draw(false, length);
-                               System.out.println(" pen down moved east");
-                                //canvas.setX(canvas.getPosX());
                                 break;
                             case "S":
-                                //canvas.setPosY(canvas.getY() + length);
                                 canvas.draw(true, length);
-                                //canvas.setY(canvas.getPosY());
                                 break;
                             case "W":
-                                //canvas.setPosX(canvas.getX() - length);
                                 canvas.draw(false, -length);
-                                //canvas.setX(canvas.getPosX());
                                 break;
                         }
                     }
@@ -182,7 +144,7 @@ public class ServerDrawing extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             ServerDrawing server;
-            TurtleCanvas c = new TurtleCanvas();
+            TurtleCanvas c = new TurtleCanvas(WIDTH,HEIGHT);
             public void run() {
                 server = new ServerDrawing(c);//.setVisible(true);
 				Thread t = new Thread(new Runnable() {

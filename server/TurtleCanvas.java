@@ -4,43 +4,31 @@ import java.awt.image.BufferedImage;
 
 public class TurtleCanvas extends JPanel{
 
-	//private JPanel canvas;
 	private int x, y; //The current pen coordinates
-	private int posX, posY; //The position to move the pen to
-	private boolean penDown;
+	private int width, height;
 	private boolean NS;
 	private int length;
 	BufferedImage image;
 	Graphics2D graphics;
 
-	public TurtleCanvas(){
-		//canvas = new Canvas();
-		image = new BufferedImage(450, 335, BufferedImage.TYPE_INT_ARGB);
+	public TurtleCanvas(int initWidth, int initHeight){
+		width = initWidth;
+		height = initHeight;
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		graphics = image.createGraphics();
 		//graphics.setBackground(Color.BLACK);
 		graphics.setColor(Color.BLACK);
-		//graphics.drawLine(0,0,20,20);
-		posX = 0;
-		posY = 0;
 		x = 0;
 		y = 0;
-		penDown = false;
 		NS = true;
 		length = 0;
 	}
 
 	@Override
 	public void paintComponent(Graphics g){
-		//
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, this);
-		//g.drawLine(0,0,20,20);
-		//g.drawString("BLAH", 20, 20);
-         //   g.drawRect(200, 200, 200, 200);
-         System.out.println("x: " + x + " y: " + y + " posx " + posX + " posy " + posY);
-         //x = posX;
-         //y = posY;
-     	 System.out.println("x: " + x + " y: " + y + " posx " + posX + " posy " + posY);
+     	System.out.println("x: " + x + " y: " + y);
 	}
 
 	public void draw(boolean NorS, int newLength){
@@ -64,13 +52,6 @@ public class TurtleCanvas extends JPanel{
 	}
 
 	//Getters and Setters
-	public void setPosX(int newX){
-		posX = newX;
-	}
-
-	public void setPosY(int newY){
-		posY = newY;
-	}
 
 	public void setX(int newX){
 		x = newX;
@@ -84,17 +65,6 @@ public class TurtleCanvas extends JPanel{
 		length = newLength;
 	}
 
-	public void setPenDown(boolean newPenDown){
-		penDown = newPenDown;
-	}
-
-	public int getPosX(){
-		return posX;
-	}
-
-	public int getPosY(){
-		return posY;
-	}
 
 	public int getX(){
 		return x;
@@ -108,7 +78,4 @@ public class TurtleCanvas extends JPanel{
 		return length;
 	}
 
-	public boolean isPenDown(){
-		return penDown;
-	}
 }

@@ -32,8 +32,9 @@ public class ServerDrawing extends javax.swing.JFrame {
         setResizable(false);
         
         panelToDraw.setBackground(new java.awt.Color(255, 255, 255));
+        this.add(panelToDraw);
         //panelToDraw.add(canvas);
-        javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
+        /*javax.swing.GroupLayout panelToDrawLayout = new javax.swing.GroupLayout(panelToDraw);
         panelToDraw.setLayout(panelToDrawLayout);
         panelToDrawLayout.setHorizontalGroup(
             panelToDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,7 +60,7 @@ public class ServerDrawing extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panelToDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-        );
+        );*/
 
         pack();
     }                      

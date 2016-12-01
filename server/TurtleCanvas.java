@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class TurtleCanvas extends JPanel{
 
@@ -9,11 +10,20 @@ public class TurtleCanvas extends JPanel{
 	private boolean penDown;
 	private boolean NS;
 	private int length;
+	BufferedImage image;
+	Graphics2D graphics;
 
 	public TurtleCanvas(){
 		//canvas = new Canvas();
-		posX = 100;
-		posY = 100;
+		image = new BufferedImage(450, 335, BufferedImage.TYPE_INT_ARGB);
+		graphics = image.createGraphics();
+		//graphics.setBackground(Color.BLACK);
+		graphics.setColor(Color.BLACK);
+		//graphics.drawLine(0,0,20,20);
+		posX = 0;
+		posY = 0;
+		x = 0;
+		y = 0;
 		penDown = false;
 		NS = true;
 		length = 0;
@@ -23,12 +33,7 @@ public class TurtleCanvas extends JPanel{
 	public void paintComponent(Graphics g){
 		//
 		super.paintComponent(g);
-		if(NS){
-			g.drawLine(x,y,x,y-length);
-		}
-		else{
-			g.drawLine(x,y,x-length,y);
-		}
+		g.drawImage(image, 0, 0, this);
 		//g.drawLine(0,0,20,20);
 		//g.drawString("BLAH", 20, 20);
          //   g.drawRect(200, 200, 200, 200);
@@ -47,6 +52,14 @@ public class TurtleCanvas extends JPanel{
 		else{
 			x += length;
 		}
+
+		if(NS){
+			graphics.drawLine(x,y,x,y-length);
+		}
+		else{
+			graphics.drawLine(x,y,x-length,y);
+		}
+		
 		repaint();
 	}
 

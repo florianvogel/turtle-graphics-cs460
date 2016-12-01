@@ -7,7 +7,7 @@
  * Student No: 5373720
  * Email: fv69@nau.edu
  *
- * Date: 10/06/2016
+ * Date: 11/30/2016
  */
  
 import java.io.*;
@@ -251,7 +251,7 @@ public class ClientDrawingControlUI extends javax.swing.JFrame {
 
 	//Will be called when the End button is clicked.
 	//Closes the connection and exits the program
-    private void buttonEndActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void buttonEndActionPerformed(java.awt.event.ActionEvent evt){                                          
         try {
             socket.close();
             toServer.close();

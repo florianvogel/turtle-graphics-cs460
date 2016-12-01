@@ -1,3 +1,14 @@
+/**
+ * Author: Jayden Urch
+ * Student No: 5388406
+ * Email: jsu22@nau.edu
+ *
+ * Author: Florian Vogel
+ * Student No: 5373720
+ * Email: fv69@nau.edu
+ *
+ * Date: 12/01/2016
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -5,25 +16,22 @@ import java.awt.image.BufferedImage;
 public class TurtleCanvas extends JPanel{
 
 	private int x, y; //The current pen coordinates
-	private int width, height;
-	private boolean NS;
-	private int length;
-	BufferedImage image;
-	Graphics2D graphics;
+	private int width, height; //whiteboard dimensions
+	BufferedImage image; //image to draw
+	Graphics2D graphics; //graphics of the image
 
+	//constructor
 	public TurtleCanvas(int initWidth, int initHeight){
 		width = initWidth;
 		height = initHeight;
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		graphics = image.createGraphics();
-		//graphics.setBackground(Color.BLACK);
 		graphics.setColor(Color.BLACK);
 		x = 0;
 		y = 0;
-		NS = true;
-		length = 0;
 	}
 
+	//Drawing the image on the JPanel
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -31,20 +39,16 @@ public class TurtleCanvas extends JPanel{
      	System.out.println("x: " + x + " y: " + y);
 	}
 
-	public void draw(boolean NorS, int newLength){
-		NS = NorS;
-		length = newLength;
-		if(NS){
+	//Drawing the graphics on the image
+	//NorS is true if the direction to move is north or south
+	//Length is the distance to move the pen
+	public void draw(boolean NorS, int length){
+		if(NorS){
 			y += length;
-		}
-		else{
-			x += length;
-		}
-
-		if(NS){
 			graphics.drawLine(x,y,x,y-length);
 		}
 		else{
+			x += length;
 			graphics.drawLine(x,y,x-length,y);
 		}
 		
@@ -61,11 +65,6 @@ public class TurtleCanvas extends JPanel{
 		y = newY;
 	}
 
-	public void setLength(int newLength){
-		length = newLength;
-	}
-
-
 	public int getX(){
 		return x;
 	}
@@ -73,9 +72,4 @@ public class TurtleCanvas extends JPanel{
 	public int getY(){
 		return y;
 	}
-
-	public int getLength(){
-		return length;
-	}
-
 }
